@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("hi")
     fetchImage()
-    fetchBreed() 
+    fetchBreed()
     changeColor()
 })
 
@@ -73,17 +73,30 @@ function addBreed(breed) {
     ul.appendChild(li)
 }
 
-function sortBreed(){
-    const dropdown = document.querySelector("#breed-dropdown")
-    const optionA = document.querySelector(option[value="a"])
-    const optionB = document.querySelector(option[value="b"])
-    const optionC = document.querySelector(option[value="c"])
-    const optionD = document.querySelector(option[value="d"])
-    const li = document.querySelectorAll('li')
 
-    dropdown.addEventListener("click", () => {
-        if (optionA.innerText.startsWith("a"))
-            return li.innerText.startsWith("a")
-            //a list with all of the innertext starting with A
-    })
-}
+const dropdown = document.querySelector("#breed-dropdown")
+const ul = document.querySelector('#dog-breeds')
+dropdown.addEventListener('change', (event) => {
+    const dogBreeds = ul.querySelectorAll('li')
+    ul.innerHTML = ''
+    for(const c in dogBreeds) {
+        if (event.target.value == dogBreeds[c].innerText.slice(0,1)) {
+            ul.appendChild(dogBreeds[c])
+        }
+    }
+})
+
+// function sortBreed(){
+//
+//     const optionA = document.querySelector(option[value="a"])
+//     const optionB = document.querySelector(option[value="b"])
+//     const optionC = document.querySelector(option[value="c"])
+//     const optionD = document.querySelector(option[value="d"])
+//     const li = document.querySelectorAll('li')
+
+//     dropdown.addEventListener("click", () => {
+//         if (optionA.innerText.startsWith("a"))
+//             return li.innerText.startsWith("a")
+//             //a list with all of the innertext starting with A
+//     })
+// }
