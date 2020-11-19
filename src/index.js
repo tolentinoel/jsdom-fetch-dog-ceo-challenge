@@ -3,20 +3,17 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("hi")
     fetchImage()
-    fetchBreed() 
+    fetchBreed()
     changeColor()
+    dropDownListener()
+
 })
 
 function fetchImage() {
     const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
     fetch(imgUrl)
         .then((resp) => resp.json())
-        .then((json) => {
-            console.log(json)
-
-            renderImage(json)
-        }
-        )
+        .then((json) => renderImage(json))
 }
 
 function renderImage(json) {
@@ -51,7 +48,7 @@ function fetchBreed() {
 }
 
 function renderBreed(json) {
-    const breedArr = Object.keys(json.message)
+    breedArr = Object.keys(json.message)
     breedArr.map(breed => {
         addBreed(breed)
     })
@@ -73,17 +70,28 @@ function addBreed(breed) {
     ul.appendChild(li)
 }
 
-function sortBreed(){
-    const dropdown = document.querySelector("#breed-dropdown")
-    const optionA = document.querySelector(option[value="a"])
-    const optionB = document.querySelector(option[value="b"])
-    const optionC = document.querySelector(option[value="c"])
-    const optionD = document.querySelector(option[value="d"])
-    const li = document.querySelectorAll('li')
+function clearList(element) {
+    let child = element.lastElementChild;
+    while (child) {
+      element.removeChild(child);
+      child = element.lastElementChild;
+    }
+  }
 
-    dropdown.addEventListener("click", () => {
-        if (optionA.innerText.startsWith("a"))
-            return li.innerText.startsWith("a")
-            //a list with all of the innertext starting with A
-    })
+function updatedList(breeds){
+    const ul = document.querySelector('#dog-breeds')
+    clearList(ul)
+    breeds.forEach(breed => addBreed(breed))
 }
+
+function sortBreed(letter){
+    updatedList(breedArr.filter(breed => breed.startsWith(letter)))
+}
+
+function dropDownListener() {
+    const dropDown = document.querySelector("#breed-dropdown")
+    dropDown.addEventListener('change', function(event) {
+        sortBreed(event.target.value);
+    });
+}
+
